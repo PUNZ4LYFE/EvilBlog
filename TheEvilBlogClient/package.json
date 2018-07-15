@@ -1,0 +1,23 @@
+{
+  "name": "starter",
+  "version": "1.0.0",
+  "description": "Just a starter for canvas projects.",
+  "main": "index.js",
+  "scripts": {
+    "start": "browser-sync start --server --files *.js, *.html, *.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estebanpadilla/starter.git"
+  },
+  "keywords": [],
+  "author": "Esteban Padilla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/estebanpadilla/starter/issues"
+  },
+  "homepage": "https://github.com/estebanpadilla/starter#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.13"
+  }
+}

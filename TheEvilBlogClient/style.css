@@ -1,0 +1,130 @@
+@font-face {
+    font-family: champagne;
+    src: url(fonts/champagne.ttf);
+}
+
+@font-face {
+    font-family: claudia;
+    src: url(fonts/claudia.ttf);
+}
+
+body {
+    width: 100%;
+    max-width: 1500px;
+}
+
+.tituloPrincipal {
+    background-color: #A1869E;
+    font-family: champagne;
+    font-size: 45px;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 0px;
+}
+
+.first, .second {
+    background-color: #AFD2E9;
+    padding-bottom: 20px;
+}
+
+#HTMLBody {
+    width: 100%;
+}
+
+.tituloSecundario {
+    background-color: #A1869E;
+    font-family: champagne;
+    font-size: 45px;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0px;
+}
+
+input, textarea {
+    display: block;
+    height: 50px;
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.boton {
+    color: white;
+    font-family: champagne;
+    font-family: 12px;
+    background-color: #886176;
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    width: 100px;
+    display: inline-block;
+}
+
+.selected {
+    background-color: #797596;
+    width: 97%;
+    padding: 2px;
+    border-radius: 6px;
+    display: block;
+    margin: 22px;
+    padding-bottom: 10px;
+}
+
+.postStyle {
+    background-color: #BBADA0;
+    width: 97%;
+    padding: 2px;
+    border-radius: 6px;
+    display: block;
+    margin: 22px;
+    padding-bottom: 10px;
+}
+
+.postStyle h2, .selected h2 {
+    font-family: champagne;
+    color: maroon;
+    margin-left: 20px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.postStyle p, .selected p {
+    margin-left: 20px;
+    font-family: champagne;
+    user-select: none;
+    pointer-events: none;
+}
+
+.botones {
+    margin-left: 37%;
+}
+
+.editable {
+    background-color: #797596;
+}
+
+#titulo, #cuerpo, #comentario {
+    background-color: #AFD2E9;
+    border: solid 1px #0B1D51;
+    padding: 5px;
+    color: black;
+    font: champagne 16px;
+}
+
+.comment {
+    background-color: #9D96B8;
+    border-radius: 6px;
+    width: 700px;
+    margin-left: 2%;
+    padding: 1px;
+    margin-bottom: 10px;
+}
