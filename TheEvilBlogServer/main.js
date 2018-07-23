@@ -30,11 +30,11 @@ var server = http.createServer((request, response) => { //arrow function
             switch (method) {
                 case 'OPTIONS':
                     respondToOptions(request, response);
-                 break;
+                    break;
 
                 case 'GET':
                     getPosts(request, response);
-                break;
+                    break;
 
                 case 'POST':
                     postPosts(request, response);
@@ -42,15 +42,15 @@ var server = http.createServer((request, response) => { //arrow function
 
                 case 'PATCH':
                     updatePost(request, response);
-                break;
+                    break;
 
                 case 'DELETE':
                     deletePost(request, response, parseUrl.query.key);
-                break;
+                    break;
 
                 default:
                     send404(request, response);
-                break;
+                    break;
             }
             break;
     }
@@ -86,20 +86,18 @@ function loadPosts() {
 function loadPostsPromiseExecuter(resolve, reject) {
     fs.readFile(path.resolve(process.cwd(), './data/posts.json'), function (err, data) {
         if (err) {
-            //reject();
+            reject();
         } else {
-            var postsData = JSON.parse(data);
-            var posts = postsData['posts'];
-            //console.log(posts);
+            var posts = JSON.parse(data);
             resolve(posts);
         }
     });
 }
 
-function savePosts(posts){
-    return new Promise(function(resolve, reject){
-        fs.writeFile(path.resolve(process.cwd(), './data/posts.json'), JSON.stringify(posts), function (err){
-            if(err){
+function savePosts(posts) {
+    return new Promise(function (resolve, reject) {
+        fs.writeFile(path.resolve(process.cwd(), './data/posts.json'), JSON.stringify(posts), function (err) {
+            if (err) {
 
             } else {
                 resolve();
@@ -108,13 +106,13 @@ function savePosts(posts){
     });
 }
 
-function getPosts(request, response){
+function getPosts(request, response) {
     setResponseHeaders(request, response);
-    loadPosts().then(function(posts){
+    loadPosts().then(function (posts) {
         response.writeHead(200, { 'Content-Type': 'application/json' });
         response.write(JSON.stringify(posts));
         response.end();
-    }).catch(function(){
+    }).catch(function () {
         send404(request, response)
     });
 }
@@ -128,7 +126,7 @@ function respondToOptions(request, response) {
 function setResponseHeaders(request, response) {
 
     var origin = '*';
-    if(request.headers['origin']){
+    if (request.headers['origin']) {
         origin = request.headers['origin'];
     }
 
@@ -142,11 +140,11 @@ function setResponseHeaders(request, response) {
 
 function send404(request, response) {
     setResponseHeaders(request, response);
-    response.writeHead(404, {'Content-Type': 'application/json'});
+    response.writeHead(404, { 'Content-Type': 'application/json' });
     response.end();
 }
 
-function postPosts(request, response){
+function postPosts(request, response) {
     setResponseHeaders(request, response);
     let buffer = [];
     let post = null;
@@ -154,30 +152,30 @@ function postPosts(request, response){
     request.on('data', function (chunk) {
         buffer.push(chunk);
     });
-        
+
     request.on('end', function () {
         buffer = Buffer.concat(buffer).toString();
         post = JSON.parse(buffer);
 
-        loadPosts().then(function (posts){
+        loadPosts().then(function (posts) {
             posts[uniqid()] = post;
-            savePosts(posts).then(function(){
+            savePosts(posts).then(function () {
                 response.writeHead(200);
                 response.end();
-            }).catch(function (){
+            }).catch(function () {
                 send404(request, response);
             });
-        }).catch(function(){
+        }).catch(function () {
             send404(request, response);
         });
 
-        });
+    });
 }
 
-function savePosts(posts){
-    return new Promise(function(resolve, reject){
-        fs.writeFile(path.resolve(process.cwd(), './data/posts.json'), JSON.stringify(posts), function(err){
-            if(err){
+function savePosts(posts) {
+    return new Promise(function (resolve, reject) {
+        fs.writeFile(path.resolve(process.cwd(), './data/posts.json'), JSON.stringify(posts), function (err) {
+            if (err) {
 
             } else {
                 resolve();
@@ -186,32 +184,32 @@ function savePosts(posts){
     });
 }
 
-function updatePost(request, response){
-    setResponseHeadder(request, response);
+function updatePost(request, response) {
+    setResponseHeaders(request, response);
 
     let buffer = [];
     let post = null;
 
-    request.on('data', function (chunk){
+    request.on('data', function (chunk) {
         buffer.push(chunk);
     });
-    request.on('end', function(){
+    request.on('end', function () {
         buffer = Buffer.concat(buffer).toString();
         post = JSON.parse(buffer);
+        console.log(post);
+        loadPosts().then(function (posts) {
+            //for (const key in posts){
+            //for (const keyToUpdate in post){
+            //if(key === keyToUpdate){
+            posts[post.key] = post;
+            //}
+            // }
+            //}
 
-        loadPosts().then(function(posts){
-            for (const key in posts){
-                for (const keyToUpdate in post){
-                    if(key === keyToUpdate){
-                        posts[key] = post[key];
-                    }
-                }
-            }
-
-            savePosts(posts).then(function(){
+            savePosts(posts).then(function () {
                 response.writeHead(200);
                 response.end();
-            }).catch(function(){
+            }).catch(function () {
                 send404(request, response);
             });
 
@@ -219,18 +217,18 @@ function updatePost(request, response){
     });
 }
 
-function deletePost(request, response, key){
+function deletePost(request, response, key) {
     setResponseHeaders(request, response);
-    loadPosts.then(function(){
+    loadPosts().then(function () {
         delete posts[key];
 
-        savePosts(posts).then(function(){
+        savePosts(posts).then(function () {
             response.writeHead(200);
             response.end();
-        }).catch(function(){
+        }).catch(function () {
             send404(request, response);
         });
-    }).catch(function(){
+    }).catch(function () {
         send404(request, response);
     });
 }
