@@ -20,7 +20,7 @@ function init() {
         event.srcElement.classList.add('selected');
         document.getElementById('titulo').value = selectedPostIU.post.title;
         document.getElementById('cuerpo').value = selectedPostIU.post.body;
-        console.log(selectedPostIU.PostIU);
+        //console.log(selectedPostIU.PostIU);
     }
 
     function removeSelected(event) {
@@ -44,7 +44,7 @@ function init() {
                     case 200:
                         posts = [];
                         document.getElementById('HTMLBody').innerText = '';
-                        console.log(request.responseText);
+                        //console.log(request.responseText);
                         var postsData = JSON.parse(request.responseText);
                         for (const key in postsData) {
                             var postData = postsData[key];
@@ -98,9 +98,8 @@ function init() {
     }
 
     function borrarPost() {
-        var urlBase = 'https://theevilmouseblog.firebaseio.com/posts/' + selectedPostIU.post.fbkey + '.json';
         var request = new XMLHttpRequest;
-        request.open('DELETE', urlBase, true);
+        request.open('DELETE', url + '/posts', true);
         request.onreadystatechange = deletePostCallback;
         request.send();
         document.getElementById('titulo').value = '';
@@ -120,14 +119,14 @@ function init() {
     function updatePost(event) {
         var timestamp = new Date();
         var request = new XMLHttpRequest();
-        request.open('PATCH', url, true);
+        request.open('PATCH', url + '/posts', true);
         request.onreadystatechange = updatePostCallBack;
         request.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
-        var post = '{' + JSON.stringify(selectedPostIU.post.fbkey)
-            + ':{"title":' + JSON.stringify(document.getElementById('titulo').value)
+        var post = '{ "key":' + JSON.stringify(selectedPostIU.post.fbkey)
+            + ', "title":' + JSON.stringify(document.getElementById('titulo').value)
             + ', "body":' + JSON.stringify(document.getElementById('cuerpo').value)
             + ', "owner":' + JSON.stringify(owner)
-            + ', "timestamp":' + JSON.stringify(timestamp) + '}}';
+            + ', "timestamp":' + JSON.stringify(timestamp) + '}';
         console.log(post);
         request.send(post);
         document.getElementById('titulo').value = '';
