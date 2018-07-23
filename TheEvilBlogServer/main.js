@@ -45,6 +45,7 @@ var server = http.createServer((request, response) => { //arrow function
                     break;
 
                 case 'DELETE':
+                    //console.log('hola :3');
                     deletePost(request, response, parseUrl.query.key);
                     break;
 
@@ -219,7 +220,7 @@ function updatePost(request, response) {
 
 function deletePost(request, response, key) {
     setResponseHeaders(request, response);
-    loadPosts().then(function () {
+    loadPosts().then(function (posts) {
         delete posts[key];
 
         savePosts(posts).then(function () {
