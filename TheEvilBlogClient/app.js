@@ -98,10 +98,19 @@ function init() {
     }
 
     function borrarPost() {
-        var request = new XMLHttpRequest;
-        request.open('DELETE', url + '/posts', true);
+        //var key = selectedPostIU.post.fbkey;
+        //console.log(key);
+        //var request = new XMLHttpRequest;
+        //request.open('DELETE', url + '/posts?query' + '?' + key, true);
+        //request.onreadystatechange = deletePostCallback;
+        //request.send();
+
+        var url = 'http://localhost:3000/posts?query=' + selectedPostIU.post.fbkey;
+        var request = new XMLHttpRequest();
+        request.open('DELETE', url, true);
         request.onreadystatechange = deletePostCallback;
         request.send();
+
         document.getElementById('titulo').value = '';
         document.getElementById('cuerpo').value = '';
 
